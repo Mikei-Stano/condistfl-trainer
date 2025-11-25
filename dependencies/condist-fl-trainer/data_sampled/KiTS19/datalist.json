@@ -1,0 +1,15 @@
+{
+    "training": [
+        {
+            "image": "IM_KITS_000.nii.gz",
+            "label": "LB_KITS_000.nii.gz"
+        }
+    ],
+    "validation": [
+        {
+            "image": "IM_KITS_001.nii.gz",
+            "label": "LB_KITS_001.nii.gz"
+        }
+    ],
+    "testing": []
+}

@@ -1,0 +1,12 @@
+{
+    "group0": {
+        "dependency": {
+            "dockerfile": "Dockerfile_condistfl_trainer",
+            "requirements_file": null
+        },
+        "pieces": [
+            "CondistFLTrainerPiece"
+        ],
+        "secrets": []
+    }
+}

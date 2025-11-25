@@ -1,0 +1,15 @@
+{
+    "training": [
+        {
+            "image": "IM_PAN_001.nii.gz",
+            "label": "LB_PAN_001.nii.gz"
+        }
+    ],
+    "validation": [
+        {
+            "image": "IM_PAN_004.nii.gz",
+            "label": "LB_PAN_004.nii.gz"
+        }
+    ],
+    "testing": []
+}

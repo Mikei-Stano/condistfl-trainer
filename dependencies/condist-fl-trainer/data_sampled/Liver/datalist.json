@@ -1,0 +1,15 @@
+{
+    "training": [
+        {
+            "image": "IM_LVR_0.nii.gz",
+            "label": "LB_LVR_0.nii.gz"
+        }
+    ],
+    "validation": [
+        {
+            "image": "IM_LVR_1.nii.gz",
+            "label": "LB_LVR_1.nii.gz"
+        }
+    ],
+    "testing": []
+}

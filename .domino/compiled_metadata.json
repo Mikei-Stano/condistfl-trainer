@@ -1,0 +1,140 @@
+{
+    "CondistFLTrainerPiece": {
+        "name": "CondistFLTrainerPiece",
+        "dependency": {
+            "dockerfile": "Dockerfile_condistfl_trainer",
+            "requirements_file": null
+        },
+        "tags": [
+            "Medical Imaging",
+            "Federated Learning",
+            "Training",
+            "Deep Learning",
+            "CT Scan"
+        ],
+        "style": {
+            "node_label": "CondistFL Trainer",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#E24A90"
+            },
+            "useIcon": true,
+            "icon_class_name": "fas fa-graduation-cap",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Trains a federated learning model for multi-organ and tumor segmentation using CondistFL framework. Coordinates training across multiple clients (kidney, liver, pancreas, spleen) using NVFlare.",
+        "input_schema": {
+            "description": "CondistFL Training Input Model",
+            "properties": {
+                "num_rounds": {
+                    "default": 120,
+                    "description": "Number of federated learning rounds",
+                    "from_upstream": "never",
+                    "title": "Num Rounds",
+                    "type": "integer"
+                },
+                "steps_per_round": {
+                    "default": 1000,
+                    "description": "Training steps per round",
+                    "from_upstream": "never",
+                    "title": "Steps Per Round",
+                    "type": "integer"
+                },
+                "clients": {
+                    "default": "liver,spleen,pancreas,kidney",
+                    "description": "Comma-separated list of client names",
+                    "from_upstream": "never",
+                    "title": "Clients",
+                    "type": "string"
+                },
+                "gpus": {
+                    "default": "0,1,2,3",
+                    "description": "Comma-separated GPU IDs to use",
+                    "from_upstream": "never",
+                    "title": "Gpus",
+                    "type": "string"
+                },
+                "data_root_kidney": {
+                    "default": "/app/data_sampled/KiTS19",
+                    "description": "Path to kidney dataset root",
+                    "from_upstream": "never",
+                    "title": "Data Root Kidney",
+                    "type": "string"
+                },
+                "data_root_liver": {
+                    "default": "/app/data_sampled/Liver",
+                    "description": "Path to liver dataset root",
+                    "from_upstream": "never",
+                    "title": "Data Root Liver",
+                    "type": "string"
+                },
+                "data_root_pancreas": {
+                    "default": "/app/data_sampled/Pancreas",
+                    "description": "Path to pancreas dataset root",
+                    "from_upstream": "never",
+                    "title": "Data Root Pancreas",
+                    "type": "string"
+                },
+                "data_root_spleen": {
+                    "default": "/app/data_sampled/Spleen",
+                    "description": "Path to spleen dataset root",
+                    "from_upstream": "never",
+                    "title": "Data Root Spleen",
+                    "type": "string"
+                },
+                "workspace_dir": {
+                    "default": "/app/workspace",
+                    "description": "Directory to save training workspace",
+                    "from_upstream": "never",
+                    "title": "Workspace Dir",
+                    "type": "string"
+                }
+            },
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "description": "CondistFL Training Output Model",
+            "properties": {
+                "workspace_dir": {
+                    "description": "Directory containing training results and models",
+                    "title": "Workspace Dir",
+                    "type": "string"
+                },
+                "best_global_model": {
+                    "description": "Path to the best global model checkpoint",
+                    "title": "Best Global Model",
+                    "type": "string"
+                },
+                "training_complete": {
+                    "description": "Whether training completed successfully",
+                    "title": "Training Complete",
+                    "type": "boolean"
+                },
+                "num_rounds_completed": {
+                    "description": "Number of rounds completed",
+                    "title": "Num Rounds Completed",
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "Status message",
+                    "title": "Message",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "workspace_dir",
+                "best_global_model",
+                "training_complete",
+                "num_rounds_completed",
+                "message"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "source_url": null,
+        "secrets_schema": null
+    }
+}
