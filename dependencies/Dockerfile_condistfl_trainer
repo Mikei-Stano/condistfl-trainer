@@ -28,6 +28,10 @@ COPY dependencies/condist-fl-trainer/data_sampled /app/data_sampled
 # Create workspace directory
 RUN mkdir -p /app/workspace
 
+# Copy Domino metadata (required for domino CLI)
+COPY .domino /app/domino/pieces_repository/.domino
+COPY pieces /app/domino/pieces_repository/pieces
+
 # Set Python path to include src directory
 ENV PYTHONPATH="/app/src:${PYTHONPATH}"
 
