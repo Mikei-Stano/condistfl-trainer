@@ -129,3 +129,16 @@ class CondistFLTrainerPiece(BasePiece):
             num_rounds_completed=num_rounds_completed,
             message=message
         )
+
+    # Override default container resources for federated learning training
+    container_resources = {
+        "requests": {
+            "cpu": 4000,
+            "memory": 8192
+        },
+        "limits": {
+            "cpu": 16000,
+            "memory": 32768
+        },
+        "use_gpu": True
+    }

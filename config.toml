@@ -1,5 +1,5 @@
 [repository]
-REGISTRY_NAME = "ghcr.io/mikei-stano"
+REGISTRY_NAME = "mikei-stano"
 REPOSITORY_NAME = "condistfl-trainer"
 REPOSITORY_LABEL = "CondistFL Federated Learning Trainer"
-VERSION = "0.1.0"
+VERSION = "0.0.0"

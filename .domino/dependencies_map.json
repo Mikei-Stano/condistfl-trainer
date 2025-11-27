@@ -7,6 +7,7 @@
         "pieces": [
             "CondistFLTrainerPiece"
         ],
-        "secrets": []
+        "secrets": [],
+        "source_image": "ghcr.io/mikei-stano/condistfl-trainer:0.0.0-group0"
     }
 }
