@@ -24,6 +24,17 @@
                 "cursor": "pointer"
             }
         },
+        "container_resources": {
+            "requests": {
+                "cpu": 4000,
+                "memory": 8192
+            },
+            "limits": {
+                "cpu": 16000,
+                "memory": 32768
+            },
+            "use_gpu": true
+        },
         "description": "Trains a federated learning model for multi-organ and tumor segmentation using CondistFL framework. Coordinates training across multiple clients (kidney, liver, pancreas, spleen) using NVFlare.",
         "input_schema": {
             "description": "CondistFL Training Input Model",

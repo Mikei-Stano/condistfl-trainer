@@ -2,4 +2,4 @@
 REGISTRY_NAME = "mikei-stano"
 REPOSITORY_NAME = "condistfl-trainer"
 REPOSITORY_LABEL = "CondistFL Federated Learning Trainer"
-VERSION = "0.0.5"
+VERSION = "0.0.6"

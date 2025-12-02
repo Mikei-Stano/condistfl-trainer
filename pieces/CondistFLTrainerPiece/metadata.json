@@ -3,6 +3,17 @@
   "dependency": {
     "dockerfile": "Dockerfile_condistfl_trainer"
   },
+  "container_resources": {
+    "requests": {
+      "cpu": 4000,
+      "memory": 8192
+    },
+    "limits": {
+      "cpu": 16000,
+      "memory": 32768
+    },
+    "use_gpu": true
+  },
   "tags": [
     "Medical Imaging",
     "Federated Learning",
