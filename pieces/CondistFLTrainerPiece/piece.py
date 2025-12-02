@@ -30,8 +30,8 @@ class CondistFLTrainerPiece(BasePiece):
         Returns:
             OutputModel with training results
         """
-        # Get the base directory where training scripts are located
-        base_dir = Path(__file__).parent.parent.parent
+        # Base directory inside the container where code and jobs were copied
+        base_dir = Path("/app")
         
         # Ensure workspace directory exists
         workspace_path = Path(input_data.workspace_dir)
