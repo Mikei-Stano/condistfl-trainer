@@ -3,7 +3,7 @@ import json
 import subprocess
 from pathlib import Path
 from domino.base_piece import BasePiece
-from models import InputModel, OutputModel
+from .models import InputModel, OutputModel
 
 
 class CondistFLTrainerPiece(BasePiece):
