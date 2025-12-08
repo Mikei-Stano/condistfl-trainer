@@ -8,6 +8,6 @@
             "CondistFLTrainerPiece"
         ],
         "secrets": [],
-        "source_image": "ghcr.io/mikei-stano/condistfl-trainer:0.0.7-group0"
+        "source_image": "ghcr.io/mikei-stano/condistfl-trainer:0.0.8-group0"
     }
 }

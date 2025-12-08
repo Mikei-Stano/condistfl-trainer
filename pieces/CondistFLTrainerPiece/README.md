@@ -16,7 +16,7 @@ Trains multi-organ and tumor segmentation models across multiple federated clien
 
 ## Inputs
 
-- **num_rounds**: Number of FL rounds (default: 120)
+- **num_rounds**: Number of FL rounds (default: 3)
 - **steps_per_round**: Training steps per round (default: 1000)
 - **clients**: Comma-separated client names (default: "liver,spleen,pancreas,kidney")
 - **gpus**: GPU IDs to use (default: "0,1,2,3")

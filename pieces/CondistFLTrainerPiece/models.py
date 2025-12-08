@@ -7,7 +7,7 @@ class InputModel(BaseModel):
     CondistFL Training Input Model
     """
     num_rounds: int = Field(
-        default=120,
+        default=3,
         description="Number of federated learning rounds",
         json_schema_extra={"from_upstream": "never"}
     )
