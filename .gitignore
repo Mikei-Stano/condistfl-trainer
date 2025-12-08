@@ -12,3 +12,6 @@ venv/
 # Ignore medical imaging data files but keep datalist.json
 dependencies/condist-fl-trainer/data_sampled/**/*.nii.gz
 airflow/logs/
+
+# Airflow (local development only)
+airflow/
