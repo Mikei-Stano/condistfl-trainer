@@ -140,5 +140,6 @@ class CondistFLTrainerPiece(BasePiece):
             "cpu": 16000,
             "memory": 32768
         },
-        "use_gpu": True
+        "use_gpu": True,
+        "shm_size": 8192  # 8GB shared memory for PyTorch DataLoader multiprocessing
     }
