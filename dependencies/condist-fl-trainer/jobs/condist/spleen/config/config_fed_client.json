@@ -24,7 +24,7 @@
       "args": {
         "task_config": "config/config_task.json",
         "data_config": "config/config_data.json",
-        "aggregation_steps": 1000,
+        "aggregation_steps": 10,
         "method": "ConDist"
       }
     }

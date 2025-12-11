@@ -134,7 +134,7 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "source_url": "https://github.com/Mikei-Stano/condistfl-trainer//tree/main/pieces/CondistFLTrainerPiece",
+        "source_url": "https://github.com/Mikei-Stano/condistfl-trainer/tree/main/pieces/CondistFLTrainerPiece",
         "secrets_schema": null
     }
 }
