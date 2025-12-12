@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from typing import Optional, Dict
 
 
 class InputModel(BaseModel):
@@ -27,22 +27,22 @@ class InputModel(BaseModel):
         json_schema_extra={"from_upstream": "never"}
     )
     data_root_kidney: str = Field(
-        default="/app/data_sampled/KiTS19",
+        default="/app/data/KiTS19",
         description="Path to kidney dataset root",
         json_schema_extra={"from_upstream": "never"}
     )
     data_root_liver: str = Field(
-        default="/app/data_sampled/Liver",
+        default="/app/data/Liver",
         description="Path to liver dataset root",
         json_schema_extra={"from_upstream": "never"}
     )
     data_root_pancreas: str = Field(
-        default="/app/data_sampled/Pancreas",
+        default="/app/data/Pancreas",
         description="Path to pancreas dataset root",
         json_schema_extra={"from_upstream": "never"}
     )
     data_root_spleen: str = Field(
-        default="/app/data_sampled/Spleen",
+        default="/app/data/Spleen",
         description="Path to spleen dataset root",
         json_schema_extra={"from_upstream": "never"}
     )
@@ -60,14 +60,28 @@ class OutputModel(BaseModel):
     workspace_dir: str = Field(
         description="Directory containing training results and models"
     )
-    best_global_model: str = Field(
+    best_global_model_path: str = Field(
         description="Path to the best global model checkpoint"
+    )
+    global_model_path: str = Field(
+        description="Path to the final global model checkpoint"
+    )
+    best_local_models: Dict[str, str] = Field(
+        description="Paths to best local models for each client",
+        default_factory=dict
+    )
+    cross_site_validation_results: str = Field(
+        description="Path to cross-site validation results YAML file"
     )
     training_complete: bool = Field(
         description="Whether training completed successfully"
     )
     num_rounds_completed: int = Field(
         description="Number of rounds completed"
+    )
+    validation_metrics: Dict[str, float] = Field(
+        description="Summary of validation metrics (average Dice scores)",
+        default_factory=dict
     )
     message: str = Field(
         description="Status message"
