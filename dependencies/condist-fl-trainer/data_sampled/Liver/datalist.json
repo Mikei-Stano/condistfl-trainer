@@ -1,15 +1,47 @@
 {
     "training": [
-        {
-            "image": "IM_LVR_0.nii.gz",
-            "label": "LB_LVR_0.nii.gz"
-        }
+        {"image": "IM_LVR_0.nii.gz", "label": "LB_LVR_0.nii.gz"},
+        {"image": "IM_LVR_1.nii.gz", "label": "LB_LVR_1.nii.gz"},
+        {"image": "IM_LVR_10.nii.gz", "label": "LB_LVR_10.nii.gz"},
+        {"image": "IM_LVR_100.nii.gz", "label": "LB_LVR_100.nii.gz"},
+        {"image": "IM_LVR_101.nii.gz", "label": "LB_LVR_101.nii.gz"},
+        {"image": "IM_LVR_102.nii.gz", "label": "LB_LVR_102.nii.gz"},
+        {"image": "IM_LVR_103.nii.gz", "label": "LB_LVR_103.nii.gz"},
+        {"image": "IM_LVR_104.nii.gz", "label": "LB_LVR_104.nii.gz"},
+        {"image": "IM_LVR_105.nii.gz", "label": "LB_LVR_105.nii.gz"},
+        {"image": "IM_LVR_106.nii.gz", "label": "LB_LVR_106.nii.gz"},
+        {"image": "IM_LVR_107.nii.gz", "label": "LB_LVR_107.nii.gz"},
+        {"image": "IM_LVR_108.nii.gz", "label": "LB_LVR_108.nii.gz"},
+        {"image": "IM_LVR_109.nii.gz", "label": "LB_LVR_109.nii.gz"}
     ],
     "validation": [
-        {
-            "image": "IM_LVR_1.nii.gz",
-            "label": "LB_LVR_1.nii.gz"
-        }
+        {"image": "IM_LVR_0.nii.gz", "label": "LB_LVR_0.nii.gz"},
+        {"image": "IM_LVR_1.nii.gz", "label": "LB_LVR_1.nii.gz"},
+        {"image": "IM_LVR_10.nii.gz", "label": "LB_LVR_10.nii.gz"},
+        {"image": "IM_LVR_100.nii.gz", "label": "LB_LVR_100.nii.gz"},
+        {"image": "IM_LVR_101.nii.gz", "label": "LB_LVR_101.nii.gz"},
+        {"image": "IM_LVR_102.nii.gz", "label": "LB_LVR_102.nii.gz"},
+        {"image": "IM_LVR_103.nii.gz", "label": "LB_LVR_103.nii.gz"},
+        {"image": "IM_LVR_104.nii.gz", "label": "LB_LVR_104.nii.gz"},
+        {"image": "IM_LVR_105.nii.gz", "label": "LB_LVR_105.nii.gz"},
+        {"image": "IM_LVR_106.nii.gz", "label": "LB_LVR_106.nii.gz"},
+        {"image": "IM_LVR_107.nii.gz", "label": "LB_LVR_107.nii.gz"},
+        {"image": "IM_LVR_108.nii.gz", "label": "LB_LVR_108.nii.gz"},
+        {"image": "IM_LVR_109.nii.gz", "label": "LB_LVR_109.nii.gz"}
     ],
-    "testing": []
+    "testing": [
+        {"image": "IM_LVR_0.nii.gz", "label": "LB_LVR_0.nii.gz"},
+        {"image": "IM_LVR_1.nii.gz", "label": "LB_LVR_1.nii.gz"},
+        {"image": "IM_LVR_10.nii.gz", "label": "LB_LVR_10.nii.gz"},
+        {"image": "IM_LVR_100.nii.gz", "label": "LB_LVR_100.nii.gz"},
+        {"image": "IM_LVR_101.nii.gz", "label": "LB_LVR_101.nii.gz"},
+        {"image": "IM_LVR_102.nii.gz", "label": "LB_LVR_102.nii.gz"},
+        {"image": "IM_LVR_103.nii.gz", "label": "LB_LVR_103.nii.gz"},
+        {"image": "IM_LVR_104.nii.gz", "label": "LB_LVR_104.nii.gz"},
+        {"image": "IM_LVR_105.nii.gz", "label": "LB_LVR_105.nii.gz"},
+        {"image": "IM_LVR_106.nii.gz", "label": "LB_LVR_106.nii.gz"},
+        {"image": "IM_LVR_107.nii.gz", "label": "LB_LVR_107.nii.gz"},
+        {"image": "IM_LVR_108.nii.gz", "label": "LB_LVR_108.nii.gz"},
+        {"image": "IM_LVR_109.nii.gz", "label": "LB_LVR_109.nii.gz"}
+    ]
 }

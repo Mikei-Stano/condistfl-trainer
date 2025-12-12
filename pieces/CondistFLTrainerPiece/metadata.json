@@ -27,7 +27,7 @@
       "num_rounds": {
         "title": "Num Rounds",
         "description": "Number of federated learning rounds",
-        "default": 3,
+        "default": 120,
         "type": "integer",
         "from_upstream": "never"
       },

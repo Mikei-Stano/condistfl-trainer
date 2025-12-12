@@ -1,15 +1,47 @@
 {
     "training": [
-        {
-            "image": "IM_KITS_000.nii.gz",
-            "label": "LB_KITS_000.nii.gz"
-        }
+        {"image": "IM_KITS_000.nii.gz", "label": "LB_KITS_000.nii.gz"},
+        {"image": "IM_KITS_001.nii.gz", "label": "LB_KITS_001.nii.gz"},
+        {"image": "IM_KITS_002.nii.gz", "label": "LB_KITS_002.nii.gz"},
+        {"image": "IM_KITS_003.nii.gz", "label": "LB_KITS_003.nii.gz"},
+        {"image": "IM_KITS_004.nii.gz", "label": "LB_KITS_004.nii.gz"},
+        {"image": "IM_KITS_005.nii.gz", "label": "LB_KITS_005.nii.gz"},
+        {"image": "IM_KITS_006.nii.gz", "label": "LB_KITS_006.nii.gz"},
+        {"image": "IM_KITS_007.nii.gz", "label": "LB_KITS_007.nii.gz"},
+        {"image": "IM_KITS_008.nii.gz", "label": "LB_KITS_008.nii.gz"},
+        {"image": "IM_KITS_009.nii.gz", "label": "LB_KITS_009.nii.gz"},
+        {"image": "IM_KITS_010.nii.gz", "label": "LB_KITS_010.nii.gz"},
+        {"image": "IM_KITS_011.nii.gz", "label": "LB_KITS_011.nii.gz"},
+        {"image": "IM_KITS_012.nii.gz", "label": "LB_KITS_012.nii.gz"}
     ],
     "validation": [
-        {
-            "image": "IM_KITS_001.nii.gz",
-            "label": "LB_KITS_001.nii.gz"
-        }
+        {"image": "IM_KITS_000.nii.gz", "label": "LB_KITS_000.nii.gz"},
+        {"image": "IM_KITS_001.nii.gz", "label": "LB_KITS_001.nii.gz"},
+        {"image": "IM_KITS_002.nii.gz", "label": "LB_KITS_002.nii.gz"},
+        {"image": "IM_KITS_003.nii.gz", "label": "LB_KITS_003.nii.gz"},
+        {"image": "IM_KITS_004.nii.gz", "label": "LB_KITS_004.nii.gz"},
+        {"image": "IM_KITS_005.nii.gz", "label": "LB_KITS_005.nii.gz"},
+        {"image": "IM_KITS_006.nii.gz", "label": "LB_KITS_006.nii.gz"},
+        {"image": "IM_KITS_007.nii.gz", "label": "LB_KITS_007.nii.gz"},
+        {"image": "IM_KITS_008.nii.gz", "label": "LB_KITS_008.nii.gz"},
+        {"image": "IM_KITS_009.nii.gz", "label": "LB_KITS_009.nii.gz"},
+        {"image": "IM_KITS_010.nii.gz", "label": "LB_KITS_010.nii.gz"},
+        {"image": "IM_KITS_011.nii.gz", "label": "LB_KITS_011.nii.gz"},
+        {"image": "IM_KITS_012.nii.gz", "label": "LB_KITS_012.nii.gz"}
     ],
-    "testing": []
+    "testing": [
+        {"image": "IM_KITS_000.nii.gz", "label": "LB_KITS_000.nii.gz"},
+        {"image": "IM_KITS_001.nii.gz", "label": "LB_KITS_001.nii.gz"},
+        {"image": "IM_KITS_002.nii.gz", "label": "LB_KITS_002.nii.gz"},
+        {"image": "IM_KITS_003.nii.gz", "label": "LB_KITS_003.nii.gz"},
+        {"image": "IM_KITS_004.nii.gz", "label": "LB_KITS_004.nii.gz"},
+        {"image": "IM_KITS_005.nii.gz", "label": "LB_KITS_005.nii.gz"},
+        {"image": "IM_KITS_006.nii.gz", "label": "LB_KITS_006.nii.gz"},
+        {"image": "IM_KITS_007.nii.gz", "label": "LB_KITS_007.nii.gz"},
+        {"image": "IM_KITS_008.nii.gz", "label": "LB_KITS_008.nii.gz"},
+        {"image": "IM_KITS_009.nii.gz", "label": "LB_KITS_009.nii.gz"},
+        {"image": "IM_KITS_010.nii.gz", "label": "LB_KITS_010.nii.gz"},
+        {"image": "IM_KITS_011.nii.gz", "label": "LB_KITS_011.nii.gz"},
+        {"image": "IM_KITS_012.nii.gz", "label": "LB_KITS_012.nii.gz"}
+    ]
 }

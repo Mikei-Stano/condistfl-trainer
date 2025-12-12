@@ -1,15 +1,47 @@
 {
     "training": [
-        {
-            "image": "IM_PAN_001.nii.gz",
-            "label": "LB_PAN_001.nii.gz"
-        }
+        {"image": "IM_PAN_001.nii.gz", "label": "LB_PAN_001.nii.gz"},
+        {"image": "IM_PAN_004.nii.gz", "label": "LB_PAN_004.nii.gz"},
+        {"image": "IM_PAN_005.nii.gz", "label": "LB_PAN_005.nii.gz"},
+        {"image": "IM_PAN_006.nii.gz", "label": "LB_PAN_006.nii.gz"},
+        {"image": "IM_PAN_010.nii.gz", "label": "LB_PAN_010.nii.gz"},
+        {"image": "IM_PAN_012.nii.gz", "label": "LB_PAN_012.nii.gz"},
+        {"image": "IM_PAN_015.nii.gz", "label": "LB_PAN_015.nii.gz"},
+        {"image": "IM_PAN_016.nii.gz", "label": "LB_PAN_016.nii.gz"},
+        {"image": "IM_PAN_018.nii.gz", "label": "LB_PAN_018.nii.gz"},
+        {"image": "IM_PAN_019.nii.gz", "label": "LB_PAN_019.nii.gz"},
+        {"image": "IM_PAN_021.nii.gz", "label": "LB_PAN_021.nii.gz"},
+        {"image": "IM_PAN_024.nii.gz", "label": "LB_PAN_024.nii.gz"},
+        {"image": "IM_PAN_025.nii.gz", "label": "LB_PAN_025.nii.gz"}
     ],
     "validation": [
-        {
-            "image": "IM_PAN_004.nii.gz",
-            "label": "LB_PAN_004.nii.gz"
-        }
+        {"image": "IM_PAN_001.nii.gz", "label": "LB_PAN_001.nii.gz"},
+        {"image": "IM_PAN_004.nii.gz", "label": "LB_PAN_004.nii.gz"},
+        {"image": "IM_PAN_005.nii.gz", "label": "LB_PAN_005.nii.gz"},
+        {"image": "IM_PAN_006.nii.gz", "label": "LB_PAN_006.nii.gz"},
+        {"image": "IM_PAN_010.nii.gz", "label": "LB_PAN_010.nii.gz"},
+        {"image": "IM_PAN_012.nii.gz", "label": "LB_PAN_012.nii.gz"},
+        {"image": "IM_PAN_015.nii.gz", "label": "LB_PAN_015.nii.gz"},
+        {"image": "IM_PAN_016.nii.gz", "label": "LB_PAN_016.nii.gz"},
+        {"image": "IM_PAN_018.nii.gz", "label": "LB_PAN_018.nii.gz"},
+        {"image": "IM_PAN_019.nii.gz", "label": "LB_PAN_019.nii.gz"},
+        {"image": "IM_PAN_021.nii.gz", "label": "LB_PAN_021.nii.gz"},
+        {"image": "IM_PAN_024.nii.gz", "label": "LB_PAN_024.nii.gz"},
+        {"image": "IM_PAN_025.nii.gz", "label": "LB_PAN_025.nii.gz"}
     ],
-    "testing": []
+    "testing": [
+        {"image": "IM_PAN_001.nii.gz", "label": "LB_PAN_001.nii.gz"},
+        {"image": "IM_PAN_004.nii.gz", "label": "LB_PAN_004.nii.gz"},
+        {"image": "IM_PAN_005.nii.gz", "label": "LB_PAN_005.nii.gz"},
+        {"image": "IM_PAN_006.nii.gz", "label": "LB_PAN_006.nii.gz"},
+        {"image": "IM_PAN_010.nii.gz", "label": "LB_PAN_010.nii.gz"},
+        {"image": "IM_PAN_012.nii.gz", "label": "LB_PAN_012.nii.gz"},
+        {"image": "IM_PAN_015.nii.gz", "label": "LB_PAN_015.nii.gz"},
+        {"image": "IM_PAN_016.nii.gz", "label": "LB_PAN_016.nii.gz"},
+        {"image": "IM_PAN_018.nii.gz", "label": "LB_PAN_018.nii.gz"},
+        {"image": "IM_PAN_019.nii.gz", "label": "LB_PAN_019.nii.gz"},
+        {"image": "IM_PAN_021.nii.gz", "label": "LB_PAN_021.nii.gz"},
+        {"image": "IM_PAN_024.nii.gz", "label": "LB_PAN_024.nii.gz"},
+        {"image": "IM_PAN_025.nii.gz", "label": "LB_PAN_025.nii.gz"}
+    ]
 }

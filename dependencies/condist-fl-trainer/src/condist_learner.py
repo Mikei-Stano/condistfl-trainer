@@ -19,6 +19,7 @@ from pathlib import Path
 from typing import Dict, Literal, Optional
 
 import numpy as np
+import torch
 from data import DataManager
 from prettytable import PrettyTable
 from torch.utils.tensorboard import SummaryWriter
@@ -192,7 +193,7 @@ class ConDistLearner(Learner):
             if model_data:
                 data = {}
                 for var_name in model_data["model"]:
-                    data[var_name] = model_data[var_name].numpy()
+                    data[var_name] = model_data["model"][var_name].numpy()
                 dxo = DXO(data_kind=DataKind.WEIGHTS, data=data)
                 return dxo.to_shareable()
             else:

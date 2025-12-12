@@ -1,15 +1,50 @@
 {
     "training": [
-        {
-            "image": "IM_SPL_2.nii.gz",
-            "label": "LB_SPL_2.nii.gz"
-        }
+        {"image": "IM_SPL_2.nii.gz", "label": "LB_SPL_2.nii.gz"},
+        {"image": "IM_SPL_3.nii.gz", "label": "LB_SPL_3.nii.gz"},
+        {"image": "IM_SPL_10.nii.gz", "label": "LB_SPL_10.nii.gz"},
+        {"image": "IM_SPL_12.nii.gz", "label": "LB_SPL_12.nii.gz"},
+        {"image": "IM_SPL_13.nii.gz", "label": "LB_SPL_13.nii.gz"},
+        {"image": "IM_SPL_14.nii.gz", "label": "LB_SPL_14.nii.gz"},
+        {"image": "IM_SPL_16.nii.gz", "label": "LB_SPL_16.nii.gz"},
+        {"image": "IM_SPL_17.nii.gz", "label": "LB_SPL_17.nii.gz"},
+        {"image": "IM_SPL_18.nii.gz", "label": "LB_SPL_18.nii.gz"},
+        {"image": "IM_SPL_19.nii.gz", "label": "LB_SPL_19.nii.gz"},
+        {"image": "IM_SPL_20.nii.gz", "label": "LB_SPL_20.nii.gz"},
+        {"image": "IM_SPL_21.nii.gz", "label": "LB_SPL_21.nii.gz"},
+        {"image": "IM_SPL_22.nii.gz", "label": "LB_SPL_22.nii.gz"},
+        {"image": "IM_SPL_24.nii.gz", "label": "LB_SPL_24.nii.gz"}
     ],
     "validation": [
-        {
-            "image": "IM_SPL_3.nii.gz",
-            "label": "LB_SPL_3.nii.gz"
-        }
+        {"image": "IM_SPL_2.nii.gz", "label": "LB_SPL_2.nii.gz"},
+        {"image": "IM_SPL_3.nii.gz", "label": "LB_SPL_3.nii.gz"},
+        {"image": "IM_SPL_10.nii.gz", "label": "LB_SPL_10.nii.gz"},
+        {"image": "IM_SPL_12.nii.gz", "label": "LB_SPL_12.nii.gz"},
+        {"image": "IM_SPL_13.nii.gz", "label": "LB_SPL_13.nii.gz"},
+        {"image": "IM_SPL_14.nii.gz", "label": "LB_SPL_14.nii.gz"},
+        {"image": "IM_SPL_16.nii.gz", "label": "LB_SPL_16.nii.gz"},
+        {"image": "IM_SPL_17.nii.gz", "label": "LB_SPL_17.nii.gz"},
+        {"image": "IM_SPL_18.nii.gz", "label": "LB_SPL_18.nii.gz"},
+        {"image": "IM_SPL_19.nii.gz", "label": "LB_SPL_19.nii.gz"},
+        {"image": "IM_SPL_20.nii.gz", "label": "LB_SPL_20.nii.gz"},
+        {"image": "IM_SPL_21.nii.gz", "label": "LB_SPL_21.nii.gz"},
+        {"image": "IM_SPL_22.nii.gz", "label": "LB_SPL_22.nii.gz"},
+        {"image": "IM_SPL_24.nii.gz", "label": "LB_SPL_24.nii.gz"}
     ],
-    "testing": []
+    "testing": [
+        {"image": "IM_SPL_2.nii.gz", "label": "LB_SPL_2.nii.gz"},
+        {"image": "IM_SPL_3.nii.gz", "label": "LB_SPL_3.nii.gz"},
+        {"image": "IM_SPL_10.nii.gz", "label": "LB_SPL_10.nii.gz"},
+        {"image": "IM_SPL_12.nii.gz", "label": "LB_SPL_12.nii.gz"},
+        {"image": "IM_SPL_13.nii.gz", "label": "LB_SPL_13.nii.gz"},
+        {"image": "IM_SPL_14.nii.gz", "label": "LB_SPL_14.nii.gz"},
+        {"image": "IM_SPL_16.nii.gz", "label": "LB_SPL_16.nii.gz"},
+        {"image": "IM_SPL_17.nii.gz", "label": "LB_SPL_17.nii.gz"},
+        {"image": "IM_SPL_18.nii.gz", "label": "LB_SPL_18.nii.gz"},
+        {"image": "IM_SPL_19.nii.gz", "label": "LB_SPL_19.nii.gz"},
+        {"image": "IM_SPL_20.nii.gz", "label": "LB_SPL_20.nii.gz"},
+        {"image": "IM_SPL_21.nii.gz", "label": "LB_SPL_21.nii.gz"},
+        {"image": "IM_SPL_22.nii.gz", "label": "LB_SPL_22.nii.gz"},
+        {"image": "IM_SPL_24.nii.gz", "label": "LB_SPL_24.nii.gz"}
+    ]
 }
