@@ -27,7 +27,7 @@
       "num_rounds": {
         "title": "Num Rounds",
         "description": "Number of federated learning rounds",
-        "default": 120,
+        "default": 3,
         "type": "integer",
         "from_upstream": "never"
       },
@@ -99,9 +99,27 @@
         "description": "Directory containing training results and models",
         "type": "string"
       },
-      "best_global_model": {
-        "title": "Best Global Model",
+      "best_global_model_path": {
+        "title": "Best Global Model Path",
         "description": "Path to the best global model checkpoint",
+        "type": "string"
+      },
+      "global_model_path": {
+        "title": "Global Model Path",
+        "description": "Path to the final global model checkpoint",
+        "type": "string"
+      },
+      "best_local_models": {
+        "title": "Best Local Models",
+        "description": "Paths to best local models for each client",
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      },
+      "cross_site_validation_results": {
+        "title": "Cross Site Validation Results",
+        "description": "Path to cross-site validation results YAML file",
         "type": "string"
       },
       "training_complete": {
@@ -114,6 +132,14 @@
         "description": "Number of rounds completed",
         "type": "integer"
       },
+      "validation_metrics": {
+        "title": "Validation Metrics",
+        "description": "Summary of validation metrics (average Dice scores)",
+        "type": "object",
+        "additionalProperties": {
+          "type": "number"
+        }
+      },
       "message": {
         "title": "Message",
         "description": "Status message",
@@ -122,9 +148,13 @@
     },
     "required": [
       "workspace_dir",
-      "best_global_model",
+      "best_global_model_path",
+      "global_model_path",
+      "best_local_models",
+      "cross_site_validation_results",
       "training_complete",
       "num_rounds_completed",
+      "validation_metrics",
       "message"
     ],
     "description": "CondistFL Trainer output results"
