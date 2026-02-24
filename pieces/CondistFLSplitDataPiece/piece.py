@@ -1,5 +1,6 @@
 import os
 import json
+import shutil
 import base64
 import random
 from pathlib import Path
@@ -11,17 +12,38 @@ class CondistFLSplitDataPiece(BasePiece):
     """
     Splits CondistFL multi-organ datasets into k-fold cross-validation
     splits. Creates fold-specific directories with datalist.json files
-    containing train/validation partitions, and symlinks to the original
-    NIfTI files to avoid data duplication.
+    containing train/validation partitions, and copies NIfTI files to
+    shared storage so the Trainer piece can access them.
     """
 
-    # Map output field name -> (input field name, folder name in output)
+    # Map output field name -> (input field name, folder name)
     DATASETS = {
         "kidney": ("kidney_data_path", "KiTS19"),
         "liver": ("liver_data_path", "Liver"),
         "pancreas": ("pancreas_data_path", "Pancreas"),
         "spleen": ("spleen_data_path", "Spleen"),
     }
+
+    # Baked-in data root inside this container image
+    BAKED_DATA_ROOT = Path("/data")
+
+    def _resolve_data_path(self, upstream_path: str, folder_name: str) -> Path:
+        """
+        Try the upstream path first; fall back to the baked-in /data path
+        if the upstream shared-storage path is not accessible.
+        """
+        up = Path(upstream_path)
+        if (up / "datalist.json").exists():
+            return up
+        baked = self.BAKED_DATA_ROOT / folder_name
+        if (baked / "datalist.json").exists():
+            self.logger.info(
+                f"Upstream path {up} not accessible, using baked path {baked}"
+            )
+            return baked
+        raise FileNotFoundError(
+            f"datalist.json not found at upstream ({up}) or baked ({baked}) path"
+        )
 
     def piece_function(self, input_data: InputModel) -> OutputModel:
         num_folds = input_data.num_folds
@@ -44,13 +66,10 @@ class CondistFLSplitDataPiece(BasePiece):
         summary_lines = []
 
         for label, (input_field, folder_name) in self.DATASETS.items():
-            src_path = Path(getattr(input_data, input_field))
-            datalist_file = src_path / "datalist.json"
+            upstream_path = getattr(input_data, input_field)
+            src_path = self._resolve_data_path(upstream_path, folder_name)
 
-            if not datalist_file.exists():
-                raise FileNotFoundError(f"datalist.json not found in {src_path}")
-
-            with open(datalist_file, "r") as f:
+            with open(src_path / "datalist.json", "r") as f:
                 datalist = json.load(f)
 
             # Deduplicate: take unique samples from the training list
@@ -88,19 +107,21 @@ class CondistFLSplitDataPiece(BasePiece):
             dataset_dir = fold_dir / folder_name
             dataset_dir.mkdir(parents=True, exist_ok=True)
 
-            # Symlink all NIfTI files from source
+            # Copy NIfTI files from source to fold directory
             for s in unique_samples:
                 for key in ("image", "label"):
                     fname = s[key]
                     src_file = src_path / fname
                     dst_file = dataset_dir / fname
                     if src_file.exists() and not dst_file.exists():
-                        os.symlink(str(src_file.resolve()), str(dst_file))
+                        shutil.copy2(str(src_file), str(dst_file))
 
             # Write fold-specific datalist.json
+            # "testing" mirrors "validation" – used by NVFlare cross-site validation
             fold_datalist = {
                 "training": train_samples,
                 "validation": val_samples,
+                "testing": val_samples,
             }
             with open(dataset_dir / "datalist.json", "w") as f:
                 json.dump(fold_datalist, f, indent=2)
