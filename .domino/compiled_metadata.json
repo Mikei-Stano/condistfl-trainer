@@ -59,28 +59,28 @@
                 "data_root_kidney": {
                     "default": "/app/data_sampled/KiTS19",
                     "description": "Path to kidney dataset root",
-                    "from_upstream": "never",
+                    "from_upstream": "optional",
                     "title": "Data Root Kidney",
                     "type": "string"
                 },
                 "data_root_liver": {
                     "default": "/app/data_sampled/Liver",
                     "description": "Path to liver dataset root",
-                    "from_upstream": "never",
+                    "from_upstream": "optional",
                     "title": "Data Root Liver",
                     "type": "string"
                 },
                 "data_root_pancreas": {
                     "default": "/app/data_sampled/Pancreas",
                     "description": "Path to pancreas dataset root",
-                    "from_upstream": "never",
+                    "from_upstream": "optional",
                     "title": "Data Root Pancreas",
                     "type": "string"
                 },
                 "data_root_spleen": {
                     "default": "/app/data_sampled/Spleen",
                     "description": "Path to spleen dataset root",
-                    "from_upstream": "never",
+                    "from_upstream": "optional",
                     "title": "Data Root Spleen",
                     "type": "string"
                 },
@@ -103,9 +103,27 @@
                     "title": "Workspace Dir",
                     "type": "string"
                 },
-                "best_global_model": {
+                "best_global_model_path": {
                     "description": "Path to the best global model checkpoint",
-                    "title": "Best Global Model",
+                    "title": "Best Global Model Path",
+                    "type": "string"
+                },
+                "global_model_path": {
+                    "description": "Path to the final global model checkpoint",
+                    "title": "Global Model Path",
+                    "type": "string"
+                },
+                "best_local_models": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Paths to best local models for each client",
+                    "title": "Best Local Models",
+                    "type": "object"
+                },
+                "cross_site_validation_results": {
+                    "description": "Path to cross-site validation results YAML file",
+                    "title": "Cross Site Validation Results",
                     "type": "string"
                 },
                 "training_complete": {
@@ -118,6 +136,14 @@
                     "title": "Num Rounds Completed",
                     "type": "integer"
                 },
+                "validation_metrics": {
+                    "additionalProperties": {
+                        "type": "number"
+                    },
+                    "description": "Summary of validation metrics (average Dice scores)",
+                    "title": "Validation Metrics",
+                    "type": "object"
+                },
                 "message": {
                     "description": "Status message",
                     "title": "Message",
@@ -126,7 +152,9 @@
             },
             "required": [
                 "workspace_dir",
-                "best_global_model",
+                "best_global_model_path",
+                "global_model_path",
+                "cross_site_validation_results",
                 "training_complete",
                 "num_rounds_completed",
                 "message"
@@ -135,6 +163,223 @@
             "type": "object"
         },
         "source_url": "https://github.com/Mikei-Stano/condistfl-trainer/tree/main/pieces/CondistFLTrainerPiece",
+        "secrets_schema": null
+    },
+    "CondistFLDataLoaderPiece": {
+        "name": "CondistFLDataLoaderPiece",
+        "dependency": {
+            "dockerfile": "Dockerfile_condistfl_data",
+            "requirements_file": null
+        },
+        "tags": [
+            "Medical Imaging",
+            "Data Loading",
+            "CT Scan"
+        ],
+        "style": {
+            "node_label": "CondistFL Data Loader",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#4A90E2"
+            },
+            "useIcon": true,
+            "icon_class_name": "fas fa-database",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "container_resources": {
+            "cpu": 100,
+            "memory": "256Mi"
+        },
+        "description": "Loads baked-in multi-organ segmentation data (KiTS19, Liver, Pancreas, Spleen) and copies it to shared storage for downstream pieces.",
+        "source_url": "https://github.com/Mikei-Stano/condistfl-trainer/tree/main/pieces/CondistFLDataLoaderPiece",
+        "input_schema": {
+            "description": "CondistFL Data Loader Input Model",
+            "properties": {
+                "data_dir": {
+                    "default": "/data",
+                    "description": "Root directory containing the baked-in dataset folders (KiTS19, Liver, Pancreas, Spleen)",
+                    "from_upstream": "never",
+                    "title": "Data Dir",
+                    "type": "string"
+                }
+            },
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "description": "CondistFL Data Loader Output Model",
+            "properties": {
+                "kidney_data_path": {
+                    "description": "Path to kidney (KiTS19) dataset directory",
+                    "title": "Kidney Data Path",
+                    "type": "string"
+                },
+                "liver_data_path": {
+                    "description": "Path to liver dataset directory",
+                    "title": "Liver Data Path",
+                    "type": "string"
+                },
+                "pancreas_data_path": {
+                    "description": "Path to pancreas dataset directory",
+                    "title": "Pancreas Data Path",
+                    "type": "string"
+                },
+                "spleen_data_path": {
+                    "description": "Path to spleen dataset directory",
+                    "title": "Spleen Data Path",
+                    "type": "string"
+                },
+                "message": {
+                    "description": "Status message",
+                    "title": "Message",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "kidney_data_path",
+                "liver_data_path",
+                "pancreas_data_path",
+                "spleen_data_path",
+                "message"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null
+    },
+    "CondistFLSplitDataPiece": {
+        "name": "CondistFLSplitDataPiece",
+        "dependency": {
+            "dockerfile": "Dockerfile_condistfl_data",
+            "requirements_file": null
+        },
+        "tags": [
+            "Data Processing",
+            "Cross Validation",
+            "Medical Imaging"
+        ],
+        "style": {
+            "node_label": "CondistFL Split Data",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#50C878"
+            },
+            "useIcon": true,
+            "icon_class_name": "fas fa-random",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "container_resources": {
+            "cpu": 100,
+            "memory": "128Mi"
+        },
+        "description": "Splits multi-organ segmentation datasets into k-fold cross-validation sets for CondistFL federated training. Creates fold-specific datalist.json files with train/validation partitions.",
+        "source_url": "https://github.com/Mikei-Stano/condistfl-trainer/tree/main/pieces/CondistFLSplitDataPiece",
+        "input_schema": {
+            "description": "CondistFL Split Data Input Model",
+            "properties": {
+                "kidney_data_path": {
+                    "description": "Path to kidney (KiTS19) dataset directory from DataLoader",
+                    "from_upstream": "always",
+                    "title": "Kidney Data Path",
+                    "type": "string"
+                },
+                "liver_data_path": {
+                    "description": "Path to liver dataset directory from DataLoader",
+                    "from_upstream": "always",
+                    "title": "Liver Data Path",
+                    "type": "string"
+                },
+                "pancreas_data_path": {
+                    "description": "Path to pancreas dataset directory from DataLoader",
+                    "from_upstream": "always",
+                    "title": "Pancreas Data Path",
+                    "type": "string"
+                },
+                "spleen_data_path": {
+                    "description": "Path to spleen dataset directory from DataLoader",
+                    "from_upstream": "always",
+                    "title": "Spleen Data Path",
+                    "type": "string"
+                },
+                "num_folds": {
+                    "default": 3,
+                    "description": "Number of cross-validation folds",
+                    "from_upstream": "never",
+                    "title": "Num Folds",
+                    "type": "integer"
+                },
+                "fold_index": {
+                    "default": 0,
+                    "description": "Which fold to use as validation (0-based index)",
+                    "from_upstream": "never",
+                    "title": "Fold Index",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "kidney_data_path",
+                "liver_data_path",
+                "pancreas_data_path",
+                "spleen_data_path"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "description": "CondistFL Split Data Output Model",
+            "properties": {
+                "kidney_data_root": {
+                    "description": "Path to fold-specific kidney dataset with datalist.json",
+                    "title": "Kidney Data Root",
+                    "type": "string"
+                },
+                "liver_data_root": {
+                    "description": "Path to fold-specific liver dataset with datalist.json",
+                    "title": "Liver Data Root",
+                    "type": "string"
+                },
+                "pancreas_data_root": {
+                    "description": "Path to fold-specific pancreas dataset with datalist.json",
+                    "title": "Pancreas Data Root",
+                    "type": "string"
+                },
+                "spleen_data_root": {
+                    "description": "Path to fold-specific spleen dataset with datalist.json",
+                    "title": "Spleen Data Root",
+                    "type": "string"
+                },
+                "fold_index": {
+                    "description": "The fold index used for validation",
+                    "title": "Fold Index",
+                    "type": "integer"
+                },
+                "num_folds": {
+                    "description": "Total number of folds",
+                    "title": "Num Folds",
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "Status message",
+                    "title": "Message",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "kidney_data_root",
+                "liver_data_root",
+                "pancreas_data_root",
+                "spleen_data_root",
+                "fold_index",
+                "num_folds",
+                "message"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
         "secrets_schema": null
     }
 }

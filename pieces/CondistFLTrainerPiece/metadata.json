@@ -57,28 +57,28 @@
         "description": "Path to kidney dataset root",
         "default": "/app/data_sampled/KiTS19",
         "type": "string",
-        "from_upstream": "never"
+        "from_upstream": "optional"
       },
       "data_root_liver": {
         "title": "Data Root Liver",
         "description": "Path to liver dataset root",
         "default": "/app/data_sampled/Liver",
         "type": "string",
-        "from_upstream": "never"
+        "from_upstream": "optional"
       },
       "data_root_pancreas": {
         "title": "Data Root Pancreas",
         "description": "Path to pancreas dataset root",
         "default": "/app/data_sampled/Pancreas",
         "type": "string",
-        "from_upstream": "never"
+        "from_upstream": "optional"
       },
       "data_root_spleen": {
         "title": "Data Root Spleen",
         "description": "Path to spleen dataset root",
         "default": "/app/data_sampled/Spleen",
         "type": "string",
-        "from_upstream": "never"
+        "from_upstream": "optional"
       },
       "workspace_dir": {
         "title": "Workspace Dir",

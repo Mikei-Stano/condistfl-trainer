@@ -1,0 +1,26 @@
+{
+  "name": "CondistFLDataLoaderPiece",
+  "dependency": {
+    "dockerfile": "Dockerfile_condistfl_data"
+  },
+  "tags": [
+    "Medical Imaging",
+    "Data Loading",
+    "CT Scan"
+  ],
+  "style": {
+    "node_label": "CondistFL Data Loader",
+    "node_type": "default",
+    "node_style": {
+      "backgroundColor": "#4A90E2"
+    },
+    "useIcon": true,
+    "icon_class_name": "fas fa-database"
+  },
+  "container_resources": {
+    "cpu": 100,
+    "memory": "256Mi"
+  },
+  "description": "Loads baked-in multi-organ segmentation data (KiTS19, Liver, Pancreas, Spleen) and copies it to shared storage for downstream pieces.",
+  "source_url": "https://github.com/Mikei-Stano/condistfl-trainer/tree/main/pieces/CondistFLDataLoaderPiece"
+}

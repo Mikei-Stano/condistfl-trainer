@@ -29,22 +29,22 @@ class InputModel(BaseModel):
     data_root_kidney: str = Field(
         default="/app/data_sampled/KiTS19",
         description="Path to kidney dataset root",
-        json_schema_extra={"from_upstream": "never"}
+        json_schema_extra={"from_upstream": "optional"}
     )
     data_root_liver: str = Field(
         default="/app/data_sampled/Liver",
         description="Path to liver dataset root",
-        json_schema_extra={"from_upstream": "never"}
+        json_schema_extra={"from_upstream": "optional"}
     )
     data_root_pancreas: str = Field(
         default="/app/data_sampled/Pancreas",
         description="Path to pancreas dataset root",
-        json_schema_extra={"from_upstream": "never"}
+        json_schema_extra={"from_upstream": "optional"}
     )
     data_root_spleen: str = Field(
         default="/app/data_sampled/Spleen",
         description="Path to spleen dataset root",
-        json_schema_extra={"from_upstream": "never"}
+        json_schema_extra={"from_upstream": "optional"}
     )
     workspace_dir: str = Field(
         default="/app/workspace",
