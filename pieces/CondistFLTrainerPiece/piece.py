@@ -1,8 +1,10 @@
 import os
 import json
 import yaml
+import base64
 import subprocess
 from pathlib import Path
+from typing import Dict, List, Any, Optional
 from domino.base_piece import BasePiece
 from .models import InputModel, OutputModel
 
@@ -20,7 +22,57 @@ class CondistFLTrainerPiece(BasePiece):
     3. Trains for specified number of rounds
     4. Saves best global and local models
     5. Performs cross-site validation
+    6. Extracts all TensorBoard metrics for downstream visualization
     """
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _read_tb_scalars(log_dir: str) -> Dict[str, List[Dict[str, float]]]:
+        """
+        Read all scalar tags from a TensorBoard event log directory.
+        Returns {tag: [{step: int, value: float}, ...]}.
+        """
+        try:
+            from tensorboard.backend.event_processing.event_accumulator import EventAccumulator
+            ea = EventAccumulator(log_dir)
+            ea.Reload()
+            result = {}
+            for tag in ea.Tags().get("scalars", []):
+                events = ea.Scalars(tag)
+                result[tag] = [{"step": e.step, "value": e.value} for e in events]
+            return result
+        except Exception:
+            return {}
+
+    @staticmethod
+    def _parse_cross_val_yaml(path: Path) -> Optional[List[Dict[str, Any]]]:
+        """
+        Parse the cross_val_results.yaml written by ReportGenerator.
+        Expected format:
+            val_results:
+              - data_client: "kidney"
+                model_owner: "server"
+                metrics: {val_meandice_kidney: 0.85, ...}
+        Returns list of dicts or None.
+        """
+        try:
+            with open(path, "r") as f:
+                data = yaml.safe_load(f)
+            if data and isinstance(data, dict) and "val_results" in data:
+                return data["val_results"]
+            # Fallback: maybe the top-level is already a list
+            if isinstance(data, list):
+                return data
+        except Exception:
+            pass
+        return None
+
+    # ------------------------------------------------------------------
+    # Main
+    # ------------------------------------------------------------------
 
     def piece_function(self, input_data: InputModel) -> OutputModel:
         """
@@ -141,33 +193,87 @@ class CondistFLTrainerPiece(BasePiece):
         # Look for cross-site validation results
         cross_val_path = workspace_path / "server" / "simulate_job" / "cross_site_val" / "cross_val_results.yaml"
         
-        validation_metrics = {}
+        cross_val_data = None
+        validation_metrics: Dict[str, float] = {}
+
         if cross_val_path.exists():
             cross_val_results = str(cross_val_path.absolute())
             self.logger.info(f"Found cross-site validation results: {cross_val_results}")
-            
-            # Parse validation metrics
-            try:
-                with open(cross_val_path, 'r') as f:
-                    val_data = yaml.safe_load(f)
-                
-                # Extract average Dice scores for each client
-                if val_data and isinstance(val_data, dict):
-                    for client, metrics in val_data.items():
-                        if isinstance(metrics, dict) and 'val_mean_dice' in metrics:
-                            validation_metrics[f"{client}_dice"] = float(metrics['val_mean_dice'])
-                            self.logger.info(f"{client} validation Dice score: {metrics['val_mean_dice']}")
-                            
-            except Exception as e:
-                self.logger.error(f"Failed to parse validation results: {e}")
-                
+            cross_val_data = self._parse_cross_val_yaml(cross_val_path)
+
+            # Build validation_metrics summary from cross-val entries
+            if cross_val_data:
+                for entry in cross_val_data:
+                    owner = entry.get("model_owner", "")
+                    dc = entry.get("data_client", "")
+                    metrics = entry.get("metrics", {})
+                    if owner in ("server", "server_best") and "val_meandice" in metrics:
+                        validation_metrics[f"{dc}_dice"] = float(metrics["val_meandice"])
         else:
             cross_val_results = "Not found - cross-site validation may not have completed"
             self.logger.warning("Cross-site validation results not found")
-        
-        # Count completed rounds by checking workspace logs
+
+        # ----------------------------------------------------------
+        # Extract TensorBoard metrics for downstream visualization
+        # ----------------------------------------------------------
+        client_metrics: Dict[str, Dict[str, List[Dict[str, float]]]] = {}
+        for client in clients:
+            client = client.strip()
+            tb_dir = workspace_path / client / "simulate_job" / f"app_{client}" / "logs"
+            if tb_dir.is_dir():
+                scalars = self._read_tb_scalars(str(tb_dir))
+                if scalars:
+                    client_metrics[client] = scalars
+                    self.logger.info(
+                        f"Extracted TensorBoard metrics for {client}: "
+                        f"{list(scalars.keys())}"
+                    )
+
+        # Server TensorBoard
+        server_tb = workspace_path / "server" / "simulate_job" / "app_server" / "logs"
+        server_metrics: Dict[str, List[Dict[str, float]]] = {}
+        if server_tb.is_dir():
+            server_metrics = self._read_tb_scalars(str(server_tb))
+            if server_metrics:
+                self.logger.info(f"Extracted server TensorBoard metrics: {list(server_metrics.keys())}")
+
+        # If no cross-val but we have per-client val_meandice from TB, use those
+        if not validation_metrics and client_metrics:
+            for cname, tags in client_metrics.items():
+                if "val_meandice" in tags and tags["val_meandice"]:
+                    last = tags["val_meandice"][-1]
+                    validation_metrics[f"{cname}_dice"] = float(last["value"])
+
+        # ----------------------------------------------------------
+        # Build summary + display_result
+        # ----------------------------------------------------------
         num_rounds_completed = input_data.num_rounds if training_complete else 0
-        
+        status = "COMPLETED" if training_complete else "FAILED"
+
+        summary_lines = [
+            f"CondistFL Training — {status}",
+            f"Rounds: {num_rounds_completed}/{input_data.num_rounds}",
+            f"Clients: {input_data.clients}",
+            "",
+        ]
+
+        if validation_metrics:
+            summary_lines.append("Validation Dice scores (last round):")
+            for k, v in sorted(validation_metrics.items()):
+                summary_lines.append(f"  {k}: {v:.4f}")
+        else:
+            summary_lines.append("No validation metrics available yet.")
+
+        summary_lines.append("")
+        summary_lines.append(f"Best global model: {'found' if best_model_path.exists() else 'not found'}")
+        summary_lines.append(f"Local models found: {len(best_local_models)}")
+
+        summary_text = "\n".join(summary_lines)
+        self.display_result = {
+            "file_type": "txt",
+            "base64_content": base64.b64encode(summary_text.encode("utf-8")).decode("utf-8"),
+        }
+
         message = "Training completed successfully" if training_complete else "Training failed or incomplete"
         
         return OutputModel(
@@ -179,6 +285,9 @@ class CondistFLTrainerPiece(BasePiece):
             training_complete=training_complete,
             num_rounds_completed=num_rounds_completed,
             validation_metrics=validation_metrics,
+            client_metrics=client_metrics,
+            server_metrics=server_metrics,
+            cross_val_data=cross_val_data,
             message=message
         )
 

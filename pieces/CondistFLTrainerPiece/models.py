@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Optional, Dict
+from typing import Any, Dict, List, Optional
 
 
 class InputModel(BaseModel):
@@ -82,6 +82,27 @@ class OutputModel(BaseModel):
     validation_metrics: Dict[str, float] = Field(
         description="Summary of validation metrics (average Dice scores)",
         default_factory=dict
+    )
+    client_metrics: Dict[str, Dict[str, List[Dict[str, float]]]] = Field(
+        description=(
+            "Per-client TensorBoard scalars. "
+            "Structure: {client: {tag: [{step, value}, ...]}}"
+        ),
+        default_factory=dict
+    )
+    server_metrics: Dict[str, List[Dict[str, float]]] = Field(
+        description=(
+            "Server TensorBoard scalars. "
+            "Structure: {tag: [{step, value}, ...]}"
+        ),
+        default_factory=dict
+    )
+    cross_val_data: Optional[List[Dict[str, Any]]] = Field(
+        description=(
+            "Parsed cross-site validation results. "
+            "List of {data_client, model_owner, metrics: {metric_name: value}}"
+        ),
+        default=None
     )
     message: str = Field(
         description="Status message"

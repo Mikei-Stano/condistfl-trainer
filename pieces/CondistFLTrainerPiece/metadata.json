@@ -140,6 +140,38 @@
           "type": "number"
         }
       },
+      "client_metrics": {
+        "title": "Client Metrics",
+        "description": "Per-client TensorBoard scalars. Structure: {client: {tag: [{step, value}, ...]}}",
+        "type": "object",
+        "additionalProperties": {
+          "type": "object"
+        }
+      },
+      "server_metrics": {
+        "title": "Server Metrics",
+        "description": "Server TensorBoard scalars. Structure: {tag: [{step, value}, ...]}",
+        "type": "object",
+        "additionalProperties": {
+          "type": "array"
+        }
+      },
+      "cross_val_data": {
+        "title": "Cross Val Data",
+        "description": "Parsed cross-site validation results list",
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
       "message": {
         "title": "Message",
         "description": "Status message",
@@ -150,11 +182,9 @@
       "workspace_dir",
       "best_global_model_path",
       "global_model_path",
-      "best_local_models",
       "cross_site_validation_results",
       "training_complete",
       "num_rounds_completed",
-      "validation_metrics",
       "message"
     ],
     "description": "CondistFL Trainer output results"

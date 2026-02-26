@@ -1,4 +1,141 @@
 {
+    "CondistFLVisualizationPiece": {
+        "name": "CondistFLVisualizationPiece",
+        "dependency": {
+            "dockerfile": "Dockerfile_condistfl_data",
+            "requirements_file": null
+        },
+        "tags": [
+            "Medical Imaging",
+            "Federated Learning",
+            "Visualization",
+            "Charts"
+        ],
+        "style": {
+            "node_label": "CondistFL Viz",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#50C878"
+            },
+            "useIcon": true,
+            "icon_class_name": "fas fa-chart-bar",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Generates visualisation charts from CondistFL federated-learning training results: loss curves, Dice convergence, per-organ bars, and cross-site validation heatmap.",
+        "input_schema": {
+            "description": "CondistFL Visualization Input Model",
+            "properties": {
+                "training_complete": {
+                    "description": "Whether training completed successfully",
+                    "from_upstream": "always",
+                    "title": "Training Complete",
+                    "type": "boolean"
+                },
+                "num_rounds_completed": {
+                    "description": "Number of federated learning rounds completed",
+                    "from_upstream": "always",
+                    "title": "Num Rounds Completed",
+                    "type": "integer"
+                },
+                "validation_metrics": {
+                    "additionalProperties": {
+                        "type": "number"
+                    },
+                    "description": "Summary of validation metrics (Dice scores per client)",
+                    "from_upstream": "always",
+                    "title": "Validation Metrics",
+                    "type": "object"
+                },
+                "client_metrics": {
+                    "additionalProperties": {
+                        "additionalProperties": {
+                            "items": {
+                                "additionalProperties": {
+                                    "type": "number"
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "type": "object"
+                    },
+                    "description": "Per-client TensorBoard scalars. Structure: {client: {tag: [{step, value}, ...]}}",
+                    "from_upstream": "always",
+                    "title": "Client Metrics",
+                    "type": "object"
+                },
+                "server_metrics": {
+                    "additionalProperties": {
+                        "items": {
+                            "additionalProperties": {
+                                "type": "number"
+                            },
+                            "type": "object"
+                        },
+                        "type": "array"
+                    },
+                    "description": "Server TensorBoard scalars",
+                    "from_upstream": "always",
+                    "title": "Server Metrics",
+                    "type": "object"
+                },
+                "cross_val_data": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Parsed cross-site validation results",
+                    "from_upstream": "always",
+                    "title": "Cross Val Data"
+                }
+            },
+            "required": [
+                "training_complete",
+                "num_rounds_completed"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "description": "CondistFL Visualization Output Model",
+            "properties": {
+                "charts_dir": {
+                    "description": "Directory containing saved chart PNG files",
+                    "title": "Charts Dir",
+                    "type": "string"
+                },
+                "summary": {
+                    "description": "Text summary of training results",
+                    "title": "Summary",
+                    "type": "string"
+                },
+                "message": {
+                    "description": "Status message",
+                    "title": "Message",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "charts_dir",
+                "summary",
+                "message"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "source_url": "https://github.com/Mikei-Stano/condistfl-trainer/tree/main/pieces/CondistFLVisualizationPiece",
+        "secrets_schema": null
+    },
     "CondistFLTrainerPiece": {
         "name": "CondistFLTrainerPiece",
         "dependency": {
@@ -143,6 +280,53 @@
                     "description": "Summary of validation metrics (average Dice scores)",
                     "title": "Validation Metrics",
                     "type": "object"
+                },
+                "client_metrics": {
+                    "additionalProperties": {
+                        "additionalProperties": {
+                            "items": {
+                                "additionalProperties": {
+                                    "type": "number"
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "type": "object"
+                    },
+                    "description": "Per-client TensorBoard scalars. Structure: {client: {tag: [{step, value}, ...]}}",
+                    "title": "Client Metrics",
+                    "type": "object"
+                },
+                "server_metrics": {
+                    "additionalProperties": {
+                        "items": {
+                            "additionalProperties": {
+                                "type": "number"
+                            },
+                            "type": "object"
+                        },
+                        "type": "array"
+                    },
+                    "description": "Server TensorBoard scalars. Structure: {tag: [{step, value}, ...]}",
+                    "title": "Server Metrics",
+                    "type": "object"
+                },
+                "cross_val_data": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Parsed cross-site validation results. List of {data_client, model_owner, metrics: {metric_name: value}}",
+                    "title": "Cross Val Data"
                 },
                 "message": {
                     "description": "Status message",
