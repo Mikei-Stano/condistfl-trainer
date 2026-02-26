@@ -1,5 +1,4 @@
 from pydantic import BaseModel, Field
-from typing import Any, Dict, List, Optional
 
 
 class InputModel(BaseModel):
@@ -14,27 +13,24 @@ class InputModel(BaseModel):
         description="Number of federated learning rounds completed",
         json_schema_extra={"from_upstream": "always"}
     )
-    validation_metrics: Dict[str, float] = Field(
-        description="Summary of validation metrics (Dice scores per client)",
-        default_factory=dict,
+    validation_metrics: str = Field(
+        description="JSON string of validation metrics {client_dice: float}",
+        default="{}",
         json_schema_extra={"from_upstream": "always"}
     )
-    client_metrics: Dict[str, Dict[str, List[Dict[str, float]]]] = Field(
-        description=(
-            "Per-client TensorBoard scalars. "
-            "Structure: {client: {tag: [{step, value}, ...]}}"
-        ),
-        default_factory=dict,
+    client_metrics: str = Field(
+        description="JSON string of per-client TensorBoard scalars",
+        default="{}",
         json_schema_extra={"from_upstream": "always"}
     )
-    server_metrics: Dict[str, List[Dict[str, float]]] = Field(
-        description="Server TensorBoard scalars",
-        default_factory=dict,
+    server_metrics: str = Field(
+        description="JSON string of server TensorBoard scalars",
+        default="{}",
         json_schema_extra={"from_upstream": "always"}
     )
-    cross_val_data: Optional[List[Dict[str, Any]]] = Field(
-        description="Parsed cross-site validation results",
-        default=None,
+    cross_val_data: str = Field(
+        description="JSON string of cross-site validation results, or empty string",
+        default="",
         json_schema_extra={"from_upstream": "always"}
     )
 

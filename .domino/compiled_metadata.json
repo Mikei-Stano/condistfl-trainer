@@ -40,63 +40,32 @@
                     "type": "integer"
                 },
                 "validation_metrics": {
-                    "additionalProperties": {
-                        "type": "number"
-                    },
-                    "description": "Summary of validation metrics (Dice scores per client)",
+                    "default": "{}",
+                    "description": "JSON string of validation metrics {client_dice: float}",
                     "from_upstream": "always",
                     "title": "Validation Metrics",
-                    "type": "object"
+                    "type": "string"
                 },
                 "client_metrics": {
-                    "additionalProperties": {
-                        "additionalProperties": {
-                            "items": {
-                                "additionalProperties": {
-                                    "type": "number"
-                                },
-                                "type": "object"
-                            },
-                            "type": "array"
-                        },
-                        "type": "object"
-                    },
-                    "description": "Per-client TensorBoard scalars. Structure: {client: {tag: [{step, value}, ...]}}",
+                    "default": "{}",
+                    "description": "JSON string of per-client TensorBoard scalars",
                     "from_upstream": "always",
                     "title": "Client Metrics",
-                    "type": "object"
+                    "type": "string"
                 },
                 "server_metrics": {
-                    "additionalProperties": {
-                        "items": {
-                            "additionalProperties": {
-                                "type": "number"
-                            },
-                            "type": "object"
-                        },
-                        "type": "array"
-                    },
-                    "description": "Server TensorBoard scalars",
+                    "default": "{}",
+                    "description": "JSON string of server TensorBoard scalars",
                     "from_upstream": "always",
                     "title": "Server Metrics",
-                    "type": "object"
+                    "type": "string"
                 },
                 "cross_val_data": {
-                    "anyOf": [
-                        {
-                            "items": {
-                                "type": "object"
-                            },
-                            "type": "array"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "default": null,
-                    "description": "Parsed cross-site validation results",
+                    "default": "",
+                    "description": "JSON string of cross-site validation results, or empty string",
                     "from_upstream": "always",
-                    "title": "Cross Val Data"
+                    "title": "Cross Val Data",
+                    "type": "string"
                 }
             },
             "required": [
@@ -274,59 +243,28 @@
                     "type": "integer"
                 },
                 "validation_metrics": {
-                    "additionalProperties": {
-                        "type": "number"
-                    },
-                    "description": "Summary of validation metrics (average Dice scores)",
+                    "default": "{}",
+                    "description": "JSON string of validation metrics dict {client_dice: float}",
                     "title": "Validation Metrics",
-                    "type": "object"
+                    "type": "string"
                 },
                 "client_metrics": {
-                    "additionalProperties": {
-                        "additionalProperties": {
-                            "items": {
-                                "additionalProperties": {
-                                    "type": "number"
-                                },
-                                "type": "object"
-                            },
-                            "type": "array"
-                        },
-                        "type": "object"
-                    },
-                    "description": "Per-client TensorBoard scalars. Structure: {client: {tag: [{step, value}, ...]}}",
+                    "default": "{}",
+                    "description": "JSON string of per-client TensorBoard scalars {client: {tag: [{step, value}]}}",
                     "title": "Client Metrics",
-                    "type": "object"
+                    "type": "string"
                 },
                 "server_metrics": {
-                    "additionalProperties": {
-                        "items": {
-                            "additionalProperties": {
-                                "type": "number"
-                            },
-                            "type": "object"
-                        },
-                        "type": "array"
-                    },
-                    "description": "Server TensorBoard scalars. Structure: {tag: [{step, value}, ...]}",
+                    "default": "{}",
+                    "description": "JSON string of server TensorBoard scalars {tag: [{step, value}]}",
                     "title": "Server Metrics",
-                    "type": "object"
+                    "type": "string"
                 },
                 "cross_val_data": {
-                    "anyOf": [
-                        {
-                            "items": {
-                                "type": "object"
-                            },
-                            "type": "array"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "default": null,
-                    "description": "Parsed cross-site validation results. List of {data_client, model_owner, metrics: {metric_name: value}}",
-                    "title": "Cross Val Data"
+                    "default": "",
+                    "description": "JSON string of cross-site validation results list, or empty string if not available",
+                    "title": "Cross Val Data",
+                    "type": "string"
                 },
                 "message": {
                     "description": "Status message",

@@ -284,10 +284,10 @@ class CondistFLTrainerPiece(BasePiece):
             cross_site_validation_results=cross_val_results,
             training_complete=training_complete,
             num_rounds_completed=num_rounds_completed,
-            validation_metrics=validation_metrics,
-            client_metrics=client_metrics,
-            server_metrics=server_metrics,
-            cross_val_data=cross_val_data,
+            validation_metrics=json.dumps(validation_metrics),
+            client_metrics=json.dumps(client_metrics),
+            server_metrics=json.dumps(server_metrics),
+            cross_val_data=json.dumps(cross_val_data) if cross_val_data else "",
             message=message
         )
 

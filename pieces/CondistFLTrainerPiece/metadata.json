@@ -134,43 +134,27 @@
       },
       "validation_metrics": {
         "title": "Validation Metrics",
-        "description": "Summary of validation metrics (average Dice scores)",
-        "type": "object",
-        "additionalProperties": {
-          "type": "number"
-        }
+        "description": "JSON string of validation metrics dict {client_dice: float}",
+        "type": "string",
+        "default": "{}"
       },
       "client_metrics": {
         "title": "Client Metrics",
-        "description": "Per-client TensorBoard scalars. Structure: {client: {tag: [{step, value}, ...]}}",
-        "type": "object",
-        "additionalProperties": {
-          "type": "object"
-        }
+        "description": "JSON string of per-client TensorBoard scalars",
+        "type": "string",
+        "default": "{}"
       },
       "server_metrics": {
         "title": "Server Metrics",
-        "description": "Server TensorBoard scalars. Structure: {tag: [{step, value}, ...]}",
-        "type": "object",
-        "additionalProperties": {
-          "type": "array"
-        }
+        "description": "JSON string of server TensorBoard scalars",
+        "type": "string",
+        "default": "{}"
       },
       "cross_val_data": {
         "title": "Cross Val Data",
-        "description": "Parsed cross-site validation results list",
-        "anyOf": [
-          {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          {
-            "type": "null"
-          }
-        ],
-        "default": null
+        "description": "JSON string of cross-site validation results, or empty string",
+        "type": "string",
+        "default": ""
       },
       "message": {
         "title": "Message",

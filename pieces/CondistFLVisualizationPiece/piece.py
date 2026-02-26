@@ -253,9 +253,17 @@ class CondistFLVisualizationPiece(BasePiece):
     # ------------------------------------------------------------------
 
     def piece_function(self, input_data: InputModel) -> OutputModel:
+        import json as _json
+
         results_dir = Path(getattr(self, "results_path", "/tmp"))
         charts_dir = results_dir / "charts"
         charts_dir.mkdir(parents=True, exist_ok=True)
+
+        # Deserialize JSON strings from upstream
+        client_metrics = _json.loads(input_data.client_metrics) if input_data.client_metrics else {}
+        server_metrics = _json.loads(input_data.server_metrics) if input_data.server_metrics else {}
+        validation_metrics = _json.loads(input_data.validation_metrics) if input_data.validation_metrics else {}
+        cross_val_data = _json.loads(input_data.cross_val_data) if input_data.cross_val_data else None
 
         self.logger.info(
             f"Generating visualisations — training_complete={input_data.training_complete}, "
@@ -265,26 +273,26 @@ class CondistFLVisualizationPiece(BasePiece):
         chart_paths: List[Path] = []
 
         # 1. Loss curves
-        p = self._chart_loss_curves(input_data.client_metrics, charts_dir)
+        p = self._chart_loss_curves(client_metrics, charts_dir)
         if p:
             chart_paths.append(p)
             self.logger.info("Generated loss curves chart")
 
         # 2. Dice convergence curves
-        p = self._chart_dice_curves(input_data.client_metrics, charts_dir)
+        p = self._chart_dice_curves(client_metrics, charts_dir)
         if p:
             chart_paths.append(p)
             self.logger.info("Generated Dice curves chart")
 
         # 3. Per-organ Dice bar chart
-        p = self._chart_organ_dice_bars(input_data.client_metrics, charts_dir)
+        p = self._chart_organ_dice_bars(client_metrics, charts_dir)
         if p:
             chart_paths.append(p)
             self.logger.info("Generated per-organ Dice bar chart")
 
         # 4. Cross-site validation heatmap
-        if input_data.cross_val_data:
-            p = self._chart_crossval_heatmap(input_data.cross_val_data, charts_dir)
+        if cross_val_data:
+            p = self._chart_crossval_heatmap(cross_val_data, charts_dir)
             if p:
                 chart_paths.append(p)
                 self.logger.info("Generated cross-validation heatmap")
@@ -306,9 +314,9 @@ class CondistFLVisualizationPiece(BasePiece):
             f"Rounds completed: {input_data.num_rounds_completed}",
             f"Charts generated: {len(chart_paths)}",
         ]
-        if input_data.validation_metrics:
+        if validation_metrics:
             summary_lines.append("Validation Dice:")
-            for k, v in sorted(input_data.validation_metrics.items()):
+            for k, v in sorted(validation_metrics.items()):
                 summary_lines.append(f"  {k}: {v:.4f}")
 
         summary = "\n".join(summary_lines)

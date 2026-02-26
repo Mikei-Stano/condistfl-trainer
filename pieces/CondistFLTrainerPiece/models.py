@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Any, Dict, List, Optional
+from typing import Dict, Optional
 
 
 class InputModel(BaseModel):
@@ -79,30 +79,21 @@ class OutputModel(BaseModel):
     num_rounds_completed: int = Field(
         description="Number of rounds completed"
     )
-    validation_metrics: Dict[str, float] = Field(
-        description="Summary of validation metrics (average Dice scores)",
-        default_factory=dict
+    validation_metrics: str = Field(
+        description="JSON string of validation metrics dict {client_dice: float}",
+        default="{}"
     )
-    client_metrics: Dict[str, Dict[str, List[Dict[str, float]]]] = Field(
-        description=(
-            "Per-client TensorBoard scalars. "
-            "Structure: {client: {tag: [{step, value}, ...]}}"
-        ),
-        default_factory=dict
+    client_metrics: str = Field(
+        description="JSON string of per-client TensorBoard scalars {client: {tag: [{step, value}]}}",
+        default="{}"
     )
-    server_metrics: Dict[str, List[Dict[str, float]]] = Field(
-        description=(
-            "Server TensorBoard scalars. "
-            "Structure: {tag: [{step, value}, ...]}"
-        ),
-        default_factory=dict
+    server_metrics: str = Field(
+        description="JSON string of server TensorBoard scalars {tag: [{step, value}]}",
+        default="{}"
     )
-    cross_val_data: Optional[List[Dict[str, Any]]] = Field(
-        description=(
-            "Parsed cross-site validation results. "
-            "List of {data_client, model_owner, metrics: {metric_name: value}}"
-        ),
-        default=None
+    cross_val_data: str = Field(
+        description="JSON string of cross-site validation results list, or empty string if not available",
+        default=""
     )
     message: str = Field(
         description="Status message"
