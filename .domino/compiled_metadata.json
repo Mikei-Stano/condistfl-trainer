@@ -163,30 +163,26 @@
                     "type": "string"
                 },
                 "data_root_kidney": {
-                    "default": "/app/data_sampled/KiTS19",
-                    "description": "Path to kidney dataset root",
-                    "from_upstream": "optional",
+                    "description": "Path to kidney dataset root (from SplitData piece)",
+                    "from_upstream": "always",
                     "title": "Data Root Kidney",
                     "type": "string"
                 },
                 "data_root_liver": {
-                    "default": "/app/data_sampled/Liver",
-                    "description": "Path to liver dataset root",
-                    "from_upstream": "optional",
+                    "description": "Path to liver dataset root (from SplitData piece)",
+                    "from_upstream": "always",
                     "title": "Data Root Liver",
                     "type": "string"
                 },
                 "data_root_pancreas": {
-                    "default": "/app/data_sampled/Pancreas",
-                    "description": "Path to pancreas dataset root",
-                    "from_upstream": "optional",
+                    "description": "Path to pancreas dataset root (from SplitData piece)",
+                    "from_upstream": "always",
                     "title": "Data Root Pancreas",
                     "type": "string"
                 },
                 "data_root_spleen": {
-                    "default": "/app/data_sampled/Spleen",
-                    "description": "Path to spleen dataset root",
-                    "from_upstream": "optional",
+                    "description": "Path to spleen dataset root (from SplitData piece)",
+                    "from_upstream": "always",
                     "title": "Data Root Spleen",
                     "type": "string"
                 },
@@ -198,6 +194,12 @@
                     "type": "string"
                 }
             },
+            "required": [
+                "data_root_kidney",
+                "data_root_liver",
+                "data_root_pancreas",
+                "data_root_spleen"
+            ],
             "title": "InputModel",
             "type": "object"
         },
@@ -311,22 +313,59 @@
             }
         },
         "container_resources": {
-            "cpu": 100,
-            "memory": "256Mi"
+            "cpu": 500,
+            "memory": "2Gi"
         },
-        "description": "Loads baked-in multi-organ segmentation data (KiTS19, Liver, Pancreas, Spleen) and copies it to shared storage for downstream pieces.",
+        "description": "Downloads multi-organ segmentation data (KiTS19, Liver, Pancreas, Spleen) from a Onedata provider, extracts and verifies it, then passes dataset paths to downstream pieces.",
         "source_url": "https://github.com/Mikei-Stano/condistfl-trainer/tree/main/pieces/CondistFLDataLoaderPiece",
         "input_schema": {
-            "description": "CondistFL Data Loader Input Model",
+            "description": "CondistFL Data Loader Input Model\n\nDownloads multi-organ segmentation data from a Onedata provider and\nmakes it available on shared storage for downstream pieces.",
             "properties": {
-                "data_dir": {
-                    "default": "/data",
-                    "description": "Root directory containing the baked-in dataset folders (KiTS19, Liver, Pancreas, Spleen)",
+                "onedata_provider_url": {
+                    "default": "https://data.spice-platform.eu",
+                    "description": "URL of the Onedata provider (Oneprovider REST API base)",
                     "from_upstream": "never",
-                    "title": "Data Dir",
+                    "title": "Onedata Provider Url",
                     "type": "string"
+                },
+                "onedata_token": {
+                    "description": "Onedata access token (X-Auth-Token) with read permissions for the target space",
+                    "from_upstream": "never",
+                    "title": "Onedata Token",
+                    "type": "string"
+                },
+                "onedata_file_id": {
+                    "default": "",
+                    "description": "Direct Onedata File ID of data_sampled.zip. Leave empty to resolve automatically from space_name / file_path.",
+                    "from_upstream": "never",
+                    "title": "Onedata File Id",
+                    "type": "string"
+                },
+                "onedata_space_name": {
+                    "default": "ConDistFL",
+                    "description": "Onedata space name used for path-based file lookup (ignored when file_id is set)",
+                    "from_upstream": "never",
+                    "title": "Onedata Space Name",
+                    "type": "string"
+                },
+                "onedata_file_path": {
+                    "default": "data_sampled.zip",
+                    "description": "Path to the zip file inside the Onedata space (ignored when file_id is set)",
+                    "from_upstream": "never",
+                    "title": "Onedata File Path",
+                    "type": "string"
+                },
+                "verify_ssl": {
+                    "default": true,
+                    "description": "Whether to verify SSL certificates when contacting the Onedata provider",
+                    "from_upstream": "never",
+                    "title": "Verify Ssl",
+                    "type": "boolean"
                 }
             },
+            "required": [
+                "onedata_token"
+            ],
             "title": "InputModel",
             "type": "object"
         },
@@ -454,24 +493,24 @@
         "output_schema": {
             "description": "CondistFL Split Data Output Model",
             "properties": {
-                "kidney_data_root": {
+                "data_root_kidney": {
                     "description": "Path to fold-specific kidney dataset with datalist.json",
-                    "title": "Kidney Data Root",
+                    "title": "Data Root Kidney",
                     "type": "string"
                 },
-                "liver_data_root": {
+                "data_root_liver": {
                     "description": "Path to fold-specific liver dataset with datalist.json",
-                    "title": "Liver Data Root",
+                    "title": "Data Root Liver",
                     "type": "string"
                 },
-                "pancreas_data_root": {
+                "data_root_pancreas": {
                     "description": "Path to fold-specific pancreas dataset with datalist.json",
-                    "title": "Pancreas Data Root",
+                    "title": "Data Root Pancreas",
                     "type": "string"
                 },
-                "spleen_data_root": {
+                "data_root_spleen": {
                     "description": "Path to fold-specific spleen dataset with datalist.json",
-                    "title": "Spleen Data Root",
+                    "title": "Data Root Spleen",
                     "type": "string"
                 },
                 "fold_index": {
@@ -491,10 +530,10 @@
                 }
             },
             "required": [
-                "kidney_data_root",
-                "liver_data_root",
-                "pancreas_data_root",
-                "spleen_data_root",
+                "data_root_kidney",
+                "data_root_liver",
+                "data_root_pancreas",
+                "data_root_spleen",
                 "fold_index",
                 "num_folds",
                 "message"

@@ -37,16 +37,16 @@ class OutputModel(BaseModel):
     """
     CondistFL Split Data Output Model
     """
-    kidney_data_root: str = Field(
+    data_root_kidney: str = Field(
         description="Path to fold-specific kidney dataset with datalist.json"
     )
-    liver_data_root: str = Field(
+    data_root_liver: str = Field(
         description="Path to fold-specific liver dataset with datalist.json"
     )
-    pancreas_data_root: str = Field(
+    data_root_pancreas: str = Field(
         description="Path to fold-specific pancreas dataset with datalist.json"
     )
-    spleen_data_root: str = Field(
+    data_root_spleen: str = Field(
         description="Path to fold-specific spleen dataset with datalist.json"
     )
     fold_index: int = Field(

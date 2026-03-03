@@ -27,24 +27,20 @@ class InputModel(BaseModel):
         json_schema_extra={"from_upstream": "never"}
     )
     data_root_kidney: str = Field(
-        default="/app/data_sampled/KiTS19",
-        description="Path to kidney dataset root",
-        json_schema_extra={"from_upstream": "optional"}
+        description="Path to kidney dataset root (from SplitData piece)",
+        json_schema_extra={"from_upstream": "always"}
     )
     data_root_liver: str = Field(
-        default="/app/data_sampled/Liver",
-        description="Path to liver dataset root",
-        json_schema_extra={"from_upstream": "optional"}
+        description="Path to liver dataset root (from SplitData piece)",
+        json_schema_extra={"from_upstream": "always"}
     )
     data_root_pancreas: str = Field(
-        default="/app/data_sampled/Pancreas",
-        description="Path to pancreas dataset root",
-        json_schema_extra={"from_upstream": "optional"}
+        description="Path to pancreas dataset root (from SplitData piece)",
+        json_schema_extra={"from_upstream": "always"}
     )
     data_root_spleen: str = Field(
-        default="/app/data_sampled/Spleen",
-        description="Path to spleen dataset root",
-        json_schema_extra={"from_upstream": "optional"}
+        description="Path to spleen dataset root (from SplitData piece)",
+        json_schema_extra={"from_upstream": "always"}
     )
     workspace_dir: str = Field(
         default="/app/workspace",

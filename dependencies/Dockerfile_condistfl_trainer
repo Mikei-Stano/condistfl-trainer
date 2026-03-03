@@ -22,9 +22,6 @@ COPY dependencies/condist-fl-trainer/convert_to_torchscript.py /app/convert_to_t
 # Copy the jobs configuration
 COPY dependencies/condist-fl-trainer/jobs /app/jobs
 
-# Copy the sampled data for training
-COPY dependencies/condist-fl-trainer/data_sampled /app/data_sampled
-
 # Create workspace directory
 RUN mkdir -p /app/workspace
 

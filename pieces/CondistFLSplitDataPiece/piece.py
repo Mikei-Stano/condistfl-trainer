@@ -24,25 +24,17 @@ class CondistFLSplitDataPiece(BasePiece):
         "spleen": ("spleen_data_path", "Spleen"),
     }
 
-    # Baked-in data root inside this container image
-    BAKED_DATA_ROOT = Path("/data")
-
     def _resolve_data_path(self, upstream_path: str, folder_name: str) -> Path:
         """
-        Try the upstream path first; fall back to the baked-in /data path
-        if the upstream shared-storage path is not accessible.
+        Validate that the upstream path contains a datalist.json.
+        Data is expected to come from the DataLoader piece (Onedata download).
         """
         up = Path(upstream_path)
         if (up / "datalist.json").exists():
             return up
-        baked = self.BAKED_DATA_ROOT / folder_name
-        if (baked / "datalist.json").exists():
-            self.logger.info(
-                f"Upstream path {up} not accessible, using baked path {baked}"
-            )
-            return baked
         raise FileNotFoundError(
-            f"datalist.json not found at upstream ({up}) or baked ({baked}) path"
+            f"datalist.json not found at upstream path ({up}). "
+            f"Ensure the DataLoader piece has downloaded data from Onedata."
         )
 
     def piece_function(self, input_data: InputModel) -> OutputModel:
@@ -147,10 +139,10 @@ class CondistFLSplitDataPiece(BasePiece):
         }
 
         return OutputModel(
-            kidney_data_root=output_roots["kidney"],
-            liver_data_root=output_roots["liver"],
-            pancreas_data_root=output_roots["pancreas"],
-            spleen_data_root=output_roots["spleen"],
+            data_root_kidney=output_roots["kidney"],
+            data_root_liver=output_roots["liver"],
+            data_root_pancreas=output_roots["pancreas"],
+            data_root_spleen=output_roots["spleen"],
             fold_index=fold_index,
             num_folds=num_folds,
             message=summary,
