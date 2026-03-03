@@ -91,18 +91,21 @@ class CondistFLDataLoaderPiece(BasePiece):
 
         total = int(resp.headers.get("content-length", 0))
         downloaded = 0
-        chunk_size = 8 * 1024  # 8 KB
+        chunk_size = 256 * 1024  # 256 KB
+        log_interval = 50 * 1024 * 1024  # log every ~50 MB
+        next_log_at = log_interval
 
         with open(dest_path, "wb") as fh:
             for chunk in resp.iter_content(chunk_size=chunk_size):
                 fh.write(chunk)
                 downloaded += len(chunk)
-                if total and downloaded % (1024 * 1024) < chunk_size:
+                if total and downloaded >= next_log_at:
                     pct = downloaded * 100 // total
                     self.logger.info(
                         f"Download progress: {downloaded / (1024*1024):.1f} MB / "
                         f"{total / (1024*1024):.1f} MB ({pct}%)"
                     )
+                    next_log_at += log_interval
 
         self.logger.info(
             f"Download complete: {downloaded / (1024*1024):.1f} MB"

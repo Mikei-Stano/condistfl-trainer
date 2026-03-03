@@ -322,7 +322,7 @@
             "description": "CondistFL Data Loader Input Model\n\nDownloads multi-organ segmentation data from a Onedata provider and\nmakes it available on shared storage for downstream pieces.",
             "properties": {
                 "onedata_provider_url": {
-                    "default": "https://data.spice-platform.eu",
+                    "default": "https://cloud-sk.data.spice-platform.eu",
                     "description": "URL of the Onedata provider (Oneprovider REST API base)",
                     "from_upstream": "never",
                     "title": "Onedata Provider Url",
@@ -356,7 +356,7 @@
                     "type": "string"
                 },
                 "verify_ssl": {
-                    "default": true,
+                    "default": false,
                     "description": "Whether to verify SSL certificates when contacting the Onedata provider",
                     "from_upstream": "never",
                     "title": "Verify Ssl",

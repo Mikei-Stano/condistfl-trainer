@@ -9,7 +9,7 @@ class InputModel(BaseModel):
     makes it available on shared storage for downstream pieces.
     """
     onedata_provider_url: str = Field(
-        default="https://data.spice-platform.eu",
+        default="https://cloud-sk.data.spice-platform.eu",
         description="URL of the Onedata provider (Oneprovider REST API base)",
         json_schema_extra={"from_upstream": "never"},
     )
@@ -36,7 +36,7 @@ class InputModel(BaseModel):
         json_schema_extra={"from_upstream": "never"},
     )
     verify_ssl: bool = Field(
-        default=True,
+        default=False,
         description="Whether to verify SSL certificates when contacting the Onedata provider",
         json_schema_extra={"from_upstream": "never"},
     )
