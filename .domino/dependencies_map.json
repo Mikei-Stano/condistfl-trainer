@@ -10,7 +10,7 @@
             "CondistFLSplitDataPiece"
         ],
         "secrets": [],
-        "source_image": "ghcr.io/mikei-stano/condistfl-trainer:0.0.9-group0"
+        "source_image": "ghcr.io/mikei-stano/condistfl-trainer:0.0.10-group0"
     },
     "group1": {
         "dependency": {
@@ -18,9 +18,10 @@
             "requirements_file": null
         },
         "pieces": [
+            "CondistFLInferencePiece",
             "CondistFLTrainerPiece"
         ],
         "secrets": [],
-        "source_image": "ghcr.io/mikei-stano/condistfl-trainer:0.0.9-group1"
+        "source_image": "ghcr.io/mikei-stano/condistfl-trainer:0.0.10-group1"
     }
 }
