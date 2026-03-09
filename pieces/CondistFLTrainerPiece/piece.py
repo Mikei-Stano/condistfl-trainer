@@ -1,5 +1,6 @@
 import os
 import json
+import shutil
 import yaml
 import base64
 import subprocess
@@ -166,15 +167,20 @@ class CondistFLTrainerPiece(BasePiece):
         global_model_path = workspace_path / "server" / "simulate_job" / "app_server" / "FL_global_model.pt"
         
         if best_model_path.exists():
-            best_model = str(best_model_path.absolute())
-            self.logger.info(f"Found best global model: {best_model}")
+            # Copy to shared storage so downstream pieces can access it
+            shared_best = os.path.join(self.results_path, "best_FL_global_model.pt")
+            shutil.copy2(str(best_model_path), shared_best)
+            best_model = shared_best
+            self.logger.info(f"Copied best global model to shared storage: {best_model}")
         else:
             best_model = "Not found - training may have failed"
             self.logger.warning("Best global model not found")
             
         if global_model_path.exists():
-            global_model = str(global_model_path.absolute())
-            self.logger.info(f"Found final global model: {global_model}")
+            shared_global = os.path.join(self.results_path, "FL_global_model.pt")
+            shutil.copy2(str(global_model_path), shared_global)
+            global_model = shared_global
+            self.logger.info(f"Copied final global model to shared storage: {global_model}")
         else:
             global_model = "Not found - training may have failed"
             self.logger.warning("Final global model not found")
