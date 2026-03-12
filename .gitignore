@@ -9,10 +9,7 @@ dist/
 build/
 .venv/
 venv/
-# Ignore medical imaging data files but keep datalist.json
-dependencies/condist-fl-trainer/data_sampled/**/*.nii.gz
-airflow/logs/
-
-# Airflow (local development only)
-airflow/
 .env
+
+# Ignore medical imaging data directory (data comes from Onedata at runtime)
+dependencies/condist-fl-trainer/data_sampled/
